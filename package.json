@@ -1,0 +1,42 @@
+{
+  "name": "swarmer.io-orchestrator",
+  "version": "0.0.0-alpha",
+  "description": "Swarmer.io - Orchestrator",
+  "main": "src/index.js",
+  "private": true,
+  "directories": {
+    "test": "tests",
+    "src": "src"
+  },
+  "scripts": {
+    "start": "babel-node src/index.js  --presets=env,stage-0",
+    "upgradeDeps": "ncu -u"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConnerAiken/swarmer.io-orochestrator.git"
+  },
+  "keywords": [
+    "swarmer",
+    "swarmer.io",
+    "orchestrator"
+  ],
+  "author": "Conner Aiken",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ConnerAiken/swarmer.io-orchestrator/issues"
+  },
+  "homepage": "https://github.com/ConnerAiken/swarmer.io-orchestrator#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.1"
+  }
+}
