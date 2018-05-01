@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "babel-node src/index.js  --presets=env,stage-0",
+    "boot": "docker-compose up",
     "upgradeDeps": "ncu -u"
   },
   "repository": {

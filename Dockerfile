@@ -1,4 +1,4 @@
-FROM node:9:slim
+FROM node:10
 
 ENV DIR /app 
 
@@ -10,7 +10,7 @@ WORKDIR ${DIR}
 COPY package.json /app
 RUN npm install
 COPY . ${DIR} 
-RUN chmod +x boot.sh
+RUN chmod +x scripts/boot.sh
  
 
 EXPOSE 8080

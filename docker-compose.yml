@@ -2,7 +2,13 @@ version: "3.6"
 services:
   orchestrator:
     container_name: orchestrator
-    restart: always
+    restart: "no"
     build: .
+    ports:
+      - "8085:8085" 
+  agent:
+    container_name: agent
+    restart: "no"
+    image: agent:latest
     ports:
       - "8080:8080" 
