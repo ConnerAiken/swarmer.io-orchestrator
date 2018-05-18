@@ -97,6 +97,7 @@ router.patch('/:agentID', (req, res) => {
     }
 
     if(flags.hasRelevantDroplets) {
+        utils.log("A user tried to update a droplet.");
         res.send("You already have droplets");
         return;
     }
@@ -120,6 +121,7 @@ router.delete('/:agentID', (req, res) => {
     let requests = [];
 
     if(relevantDroplets.length === 0) {
+        utils.log("A user tried to remove droplets but we could not find any for them.. Suspect.");
         res.send("No droplets to remove.");
         return;
     }
@@ -128,6 +130,7 @@ router.delete('/:agentID', (req, res) => {
     // Action
     // ============= 
     relevantDroplets.forEach((droplet) => {
+        utils.log(`A user is removing droplet: ${droplet.id}`);
         requests.push(api.dropletsDelete(droplet.id));
     });
  
