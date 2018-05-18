@@ -9,7 +9,7 @@ export default {
         return text;
     },
     log(msg, type = 0) { 
-        this.mockSlackIfNeeded();
+        var slack = global.slack ? global.slack : {send: () => false};
  
         if(type === 1) {
             console.warn(`[${process.env.appName}] ${msg}`); 
@@ -41,9 +41,5 @@ export default {
         }else {
             this.log("Successfully loaded .env variables..");
         }
-    },
-    mockSlackIfNeeded() { 
-        if(!global.slack) { var slack = {send: () => false}}
-        else { var slack = global.slack; }
     }
 }
