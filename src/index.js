@@ -1,141 +1,35 @@
 import './helpers/bootstrap';
  
+const promises = [];
 const digitalOcean = {
-    account: {
-
-    },
-    recentActions: [
-
-    ],
-    droplets: [
-
-    ],
-    images: [
-
-    ]
+    account: {},
+    recentActions: [],
+    droplets: [],
+    images: []
 };
 
+utils.log("Downloading account data from DigitalOcean..");
+
 // 0. Get account/droplet info
-api.account().then((data) => {
-    digitalOcean.account = data.body;
-});
+promises.push(api.account().then((data) => {
+    utils.log(`Received ${Object.keys(data.body).length} fields about the service account.`);
+    digitalOcean.account = data.body; 
+}));
 
 // 1. Get recent actions
-api.accountGetActions({includeAll: true}).then((data) => { 
-    digitalOcean.recentActions = data.body.actions;
-});
+promises.push(api.accountGetActions({includeAll: true}).then((data) => {
+    utils.log(`Received ${data.body.length} recent events.`);
+    digitalOcean.recentActions = data.body; 
+}));
 
 // 2. get list of all droplets
-api.dropletsGetAll({includeAll: true}).then((data) => {  
+promises.push(api.dropletsGetAll({includeAll: true}).then((data) => {
+    utils.log(`Received ${data.body.length} droplet data.`);
     digitalOcean.droplets = data.body;
-}); 
-
-
-// Listen for events
-app.post('/register', (req, res) => {  
-    // ================
-    // Request Check
-    // =============
-    if(!req.body.account || !req.body.plan) { 
-        res.send("Invalid request.");
-        return;
-    }
+})); 
  
-    // ================
-    // Business logic check
-    // =============
-    const fields = {
-        relevantDroplets: digitalOcean.droplets.filter((d) => d.tags.includes(req.body.account)) || []
-    };
-    const flags = {
-        hasRelevantDroplets: fields.relevantDroplets.length > 0
-    }
-
-    if(flags.hasRelevantDroplets) {
-        res.send("You already have droplets");
-        return;
-    }
-
-    // ================
-    // Action
-    // =============
-    const agentConfig = {
-        name: req.body.account + '-' + utils.makeID(),
-        monitoring: true,
-        private_networking: true,
-        backups: false,
-        region: "sfo2",
-        size: "s-1vcpu-1gb",
-        image: "34430407",
-        tags: ['agent', req.body.account]
-    };
-
-    console.log("Attempting to create droplet with ", agentConfig);
-
-    api.dropletsCreate(agentConfig).then((response) => {
-        digitalOcean.droplets.push(response.body.droplet);
-        res.send(response.body.droplet);
-        return;
-    }).catch((err) => { 
-        res.send(err);
-        return;
-    });
+Promise.all(promises).then(() => {
+    app.listen(process.env.port, () => utils.log(`Listening on port ${process.env.port}!`));
+}).catch((err) => {
+    utils.log(`Error! ${err}`)  
 });
-
-app.post('/deregister', (req, res) => { 
-    // ================
-    // Request Check
-    // =============
-    if(!req.body.account) { 
-        res.send("Invalid request.");
-        return;
-    } 
-
- 
-    // ================
-    // Business logic check
-    // =============
-    let relevantDroplets = digitalOcean.droplets.filter((droplet) => droplet.tags.includes(req.body.account));
-    let requests = [];
-
-    if(relevantDroplets.length === 0) {
-        res.send("No droplets to remove.");
-        return;
-    }
-
-    // ================
-    // Action
-    // ============= 
-    relevantDroplets.forEach((droplet) => {
-        requests.push(api.dropletsDelete(droplet.id));
-    });
- 
-    Promise.all(relevantDroplets).then(() => {
-        res.send('All droplets removed.');
-        return;
-    }).catch((err) => {
-        res.send(err);
-        return;
-    });
-});
-
-app.post('/queue', (req, res) => {
-    // ================
-    // Request Check
-    // =============
-    if(!req.body.account || !req.body.runners) { 
-        res.send("Invalid request.");
-        return;
-    } 
-    // ================
-    // Business logic check
-    // ============= 
-    
-    // ================
-    // Action
-    // ============= 
-    res.send("Queueing test runner");
-    return;
-});
-
-app.listen(3000, () => utils.log('Listening on port 3000!'));

@@ -8,13 +8,25 @@ export default {
       
         return text;
     },
-    log(msg, type = 0) {
+    log(msg, type = 0) { 
+        if(!global.slack) { var slack = {send: () => false}}
+        else { var slack = global.slack; }
+ 
         if(type === 1) {
-            console.warn(`[${process.env.appName}] ${msg}`);
+            console.warn(`[${process.env.appName}] ${msg}`); 
+                slack.send({
+                    text: msg,  
+                    icon_emoji: ':scream_cat:'
+                }); 
         }else if(type === 2) {
             console.error(`[${process.env.appName}] ${msg}`);
+            slack.send({
+                text: msg,  
+                icon_emoji: ':scream_cat:'
+            });
         }else {
             console.log(`[${process.env.appName}] ${msg}`);
+            slack.send(msg);
         }
     },
     loadENV() {

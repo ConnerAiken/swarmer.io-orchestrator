@@ -40,6 +40,7 @@
   "dependencies": {
     "do-wrapper": "^3.11.1",
     "dotenv": "^5.0.1",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "slack-webhook": "^1.0.0"
   }
 }
