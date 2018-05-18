@@ -4,11 +4,7 @@ var router = express.Router();
 router.get('/:id', (req, res) => {
     // ================
     // Request Check
-    // =============
-    if(!req.body.account || !req.body.runners) { 
-        res.send("Invalid request.");
-        return;
-    } 
+    // ============= 
     // ================
     // Business logic check
     // ============= 
@@ -23,11 +19,7 @@ router.get('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
     // ================
     // Request Check
-    // =============
-    if(!req.body.account || !req.body.runners) { 
-        res.send("Invalid request.");
-        return;
-    } 
+    // ============= 
     // ================
     // Business logic check
     // ============= 
@@ -42,11 +34,7 @@ router.post('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {
     // ================
     // Request Check
-    // =============
-    if(!req.body.account || !req.body.runners) { 
-        res.send("Invalid request.");
-        return;
-    } 
+    // ============= 
     // ================
     // Business logic check
     // ============= 
@@ -61,11 +49,7 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     // ================
     // Request Check
-    // =============
-    if(!req.body.account || !req.body.runners) { 
-        res.send("Invalid request.");
-        return;
-    } 
+    // ============= 
     // ================
     // Business logic check
     // ============= 

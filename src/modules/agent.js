@@ -55,11 +55,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {  
     // ================
     // Request Check
-    // =============
-    if(!req.body.account || !req.body.plan) { 
-        res.send("Invalid request.");
-        return;
-    }
+    // ============= 
  
     // ================
     // Business logic check
@@ -86,11 +82,7 @@ router.get('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {  
     // ================
     // Request Check
-    // =============
-    if(!req.body.account || !req.body.plan) { 
-        res.send("Invalid request.");
-        return;
-    }
+    // ============= 
  
     // ================
     // Business logic check
@@ -117,12 +109,7 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => { 
     // ================
     // Request Check
-    // =============
-    if(!req.body.account) { 
-        res.send("Invalid request.");
-        return;
-    } 
-
+    // ============= 
  
     // ================
     // Business logic check
