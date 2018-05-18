@@ -6,6 +6,7 @@ router.post('/', (req, res) => {
     // ================
     // Request Check
     // =============
+    console.log(req);
     if(!req.body.account || !req.body.plan) { 
         res.send("Invalid request.");
         return;
