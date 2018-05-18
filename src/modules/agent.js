@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router(); 
 
+var digitalOcean = global.digitalOcean;
+
 // Listen for events
 router.post('/', (req, res) => {  
     // ================
     // Request Check
-    // =============
-    console.log(req);
+    // ============= 
     if(!req.body.account || !req.body.plan) { 
         res.send("Invalid request.");
         return;

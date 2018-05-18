@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var digitalOcean = global.digitalOcean;
+
 router.get('/:id', (req, res) => {
     // ================
     // Request Check
