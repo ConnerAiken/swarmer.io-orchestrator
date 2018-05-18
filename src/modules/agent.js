@@ -54,7 +54,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {  
+router.get('/:agentID', (req, res) => {  
     // ================
     // Request Check
     // ============= 
@@ -63,7 +63,7 @@ router.get('/:id', (req, res) => {
     // Business logic check
     // =============
     const fields = {
-        relevantDroplets: digitalOcean.droplets.filter((d) => d.tags.includes(req.body.account)) || []
+        relevantDroplets: digitalOcean.droplets.filter((d) => d.tags.includes(req.params.agentID)) || []
     };
     const flags = {
         hasRelevantDroplets: fields.relevantDroplets.length > 0
@@ -81,7 +81,7 @@ router.get('/:id', (req, res) => {
     return;
 });
 
-router.patch('/:id', (req, res) => {  
+router.patch('/:agentID', (req, res) => {  
     // ================
     // Request Check
     // ============= 
@@ -90,7 +90,7 @@ router.patch('/:id', (req, res) => {
     // Business logic check
     // =============
     const fields = {
-        relevantDroplets: digitalOcean.droplets.filter((d) => d.tags.includes(req.body.account)) || []
+        relevantDroplets: digitalOcean.droplets.filter((d) => d.tags.includes(req.params.agentID)) || []
     };
     const flags = {
         hasRelevantDroplets: fields.relevantDroplets.length > 0
@@ -108,7 +108,7 @@ router.patch('/:id', (req, res) => {
     return;
 });
 
-router.delete('/:id', (req, res) => { 
+router.delete('/:agentID', (req, res) => { 
     // ================
     // Request Check
     // ============= 
@@ -116,7 +116,7 @@ router.delete('/:id', (req, res) => {
     // ================
     // Business logic check
     // =============
-    let relevantDroplets = digitalOcean.droplets.filter((droplet) => droplet.tags.includes(req.body.account));
+    let relevantDroplets = digitalOcean.droplets.filter((droplet) => droplet.tags.includes(req.params.agentID));
     let requests = [];
 
     if(relevantDroplets.length === 0) {

@@ -3,7 +3,7 @@ var router = express.Router();
 
 var digitalOcean = global.digitalOcean;
 
-router.get('/:id', (req, res) => {
+router.get('/:testID', (req, res) => {
     // ================
     // Request Check
     // ============= 
@@ -18,7 +18,7 @@ router.get('/:id', (req, res) => {
     return;
 });
 
-router.post('/:id', (req, res) => {
+router.post('/:testID', (req, res) => {
     // ================
     // Request Check
     // ============= 
@@ -33,7 +33,7 @@ router.post('/:id', (req, res) => {
     return;
 });
 
-router.patch('/:id', (req, res) => {
+router.patch('/:testID', (req, res) => {
     // ================
     // Request Check
     // ============= 
@@ -48,7 +48,7 @@ router.patch('/:id', (req, res) => {
     return;
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:testID', (req, res) => {
     // ================
     // Request Check
     // ============= 
