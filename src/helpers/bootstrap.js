@@ -23,9 +23,11 @@ global.slack = new SlackWebhook(process.env.slackWebhook, {
 });
 
 global.app = express();
-global.app.use("/agent", require('./../modules/agent'));
-global.app.use("/agent/:agentID/test", require('./../modules/agent.test'));
 global.app.use(bodyParser.json());
 global.app.use(bodyParser.urlencoded({
     extended: true
-}))
+}));
+global.app.use(utils.expressLog);
+// Routes -- config must be defined prior to importing
+global.app.use("/agent", require('./../modules/agent'));
+global.app.use("/agent/:agentID/test", require('./../modules/agent.test')); 

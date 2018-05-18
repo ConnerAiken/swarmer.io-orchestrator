@@ -8,6 +8,16 @@ export default {
       
         return text;
     },
+    expressLog(err, req, res, next) { 
+        if (res.headersSent) {
+            return next(err);
+        }
+
+        this.log(err, 2);
+        
+        res.status(500);
+        res.render('error', { error: err })  ;
+    },
     log(msg, type = 0) { 
         var slack = global.slack ? global.slack : {send: () => false};
  
