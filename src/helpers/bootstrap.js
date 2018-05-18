@@ -14,13 +14,19 @@ global.utils = utils;
 utils.loadENV(); 
  
 global.api = new DigitalOcean(process.env.doApiKey, process.env.doPageSize);
+global.digitalOcean = {
+    account: {},
+    recentActions: [],
+    droplets: [],
+    images: []
+};
 global.slack = new SlackWebhook(process.env.slackWebhook, {
     defaults: {
       username: process.env.appName,
       channel: '#orchestrator-log',
       icon_emoji: ':robot_face:'
     }
-});
+}); 
 
 global.app = express();
 global.app.use(bodyParser.json());
