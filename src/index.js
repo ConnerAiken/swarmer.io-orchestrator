@@ -8,6 +8,7 @@ const digitalOcean = {
     images: []
 };
 
+utils.log("Service has been deployed and started!"); 
 utils.log("Downloading account data from DigitalOcean..");
 
 // 0. Get account/droplet info
