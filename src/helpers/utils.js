@@ -9,7 +9,7 @@ import _ from "lodash";
 class Utils {
     static bootstrap() {   
             this.loadENV();   
-            this.api = new DigitalOcean(process.env.doApiKey, process.env.doPageSize);
+            this.api = new DigitalOcean(process.env.doApiKey, process.env.doPageSize); 
             this.digitalOcean = {
                 account: {},
                 recentActions: [],
@@ -97,28 +97,28 @@ class Utils {
         promises.push(api.account().then((data) => {
             this.log(`:thinking_face: Received ${Object.keys(data.body).length} fields about the service account.`);
             digitalOcean.account = data.body;  
-        }));
+        }).catch(e => this.log(e)));
         
         // 1. Get recent actions
         promises.push(api.accountGetActions({includeAll: true}).then((data) => { 
             this.log(`:thinking_face: There are ${data.body.length} recent events.`);
             digitalOcean.recentActions = data.body;  
-        }));
+        }).catch(e => this.log(e)));
         
         // 2. get list of all droplets
         promises.push(api.dropletsGetAll({includeAll: true}).then((data) => { 
             digitalOcean.droplets = data.body.filter(d => _.includes(d.tags, 'swarmerio-node')); 
             this.log(`:thinking_face: There are ${digitalOcean.droplets.length} droplets.`);
-        })); 
+        }).catch(e => this.log(e))); 
     
-        // 3. Fulfill promises and do sumthin 
+        // 3. Fulfill promises and do sumthin  
         Promise.all(promises).then(() => {
             this.log(`-------------------------------------`); 
             if(digitalOcean.droplets.filter(d => _.includes(d.tags, 'free-d-0')).length == digitalOcean.droplets.length) {
                 this.log(`:glitch_crab: We ran out of droplets! Scale! Scale! Scale!`); 
                 this.spinUpNode(digitalOcean, api);
             }
-        }); 
+        }).catch(e => this.log(e)); 
     }
 
     spinUpNode(digitalOcean, api) { 

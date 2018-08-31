@@ -1,7 +1,5 @@
 var express = require('express');
-var router = express.Router();
-
-var digitalOcean = global.digitalOcean;
+var router = express.Router(); 
 
 router.get('/:testID', (req, res) => {
     // ================

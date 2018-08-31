@@ -9,8 +9,8 @@ utils.log(":100: Service has been deployed and started! :100:");
 utils.log(":100: Downloading account data from DigitalOcean.. :100: "); 
 utils.log("~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-="); 
  
-
-utils.checkForUpdates(digitalOcean, api);
+ 
+utils.checkForUpdates(digitalOcean, api); 
 setInterval(utils.checkForUpdates.bind(this, digitalOcean, api), 15000);  
 
 
