@@ -4,11 +4,11 @@ import DigitalOcean from "do-wrapper";
 import express from "express";
 import bodyParser from "body-parser";
 import SlackWebhook from "slack-webhook";
+import _ from "lodash";
 
 class Utils {
     static bootstrap() {   
-            this.loadENV(); 
-            
+            this.loadENV();   
             this.api = new DigitalOcean(process.env.doApiKey, process.env.doPageSize);
             this.digitalOcean = {
                 account: {},
@@ -88,6 +88,61 @@ class Utils {
         }else {
             this.log("Successfully loaded .env variables..");
         }
+    }
+    
+    static checkForUpdates(digitalOcean, api) {
+        const promises = [];
+    
+        // 0. Get account/droplet info 
+        promises.push(api.account().then((data) => {
+            this.log(`:thinking_face: Received ${Object.keys(data.body).length} fields about the service account.`);
+            digitalOcean.account = data.body;  
+        }));
+        
+        // 1. Get recent actions
+        promises.push(api.accountGetActions({includeAll: true}).then((data) => { 
+            this.log(`:thinking_face: There are ${data.body.length} recent events.`);
+            digitalOcean.recentActions = data.body;  
+        }));
+        
+        // 2. get list of all droplets
+        promises.push(api.dropletsGetAll({includeAll: true}).then((data) => { 
+            digitalOcean.droplets = data.body.filter(d => _.includes(d.tags, 'swarmerio-node')); 
+            this.log(`:thinking_face: There are ${digitalOcean.droplets.length} droplets.`);
+        })); 
+    
+        // 3. Fulfill promises and do sumthin 
+        Promise.all(promises).then(() => {
+            this.log(`-------------------------------------`); 
+            if(digitalOcean.droplets.filter(d => _.includes(d.tags, 'free-d-0')).length == digitalOcean.droplets.length) {
+                this.log(`:glitch_crab: We ran out of droplets! Scale! Scale! Scale!`); 
+                this.spinUpNode(digitalOcean, api);
+            }
+        }); 
+    }
+
+    spinUpNode(digitalOcean, api) { 
+
+        const agentConfig = {
+            name: `node-${utils.makeID()}`,
+            monitoring: true,
+            private_networking: true,
+            backups: false,
+            region: "sfo2",
+            size: "s-1vcpu-1gb",
+            image: "34430407",
+            tags: ['swarmerio-node', 'not-ready']
+        };
+    
+        console.log("Attempting to create droplet with ", agentConfig);
+    
+        api.dropletsCreate(agentConfig).then(() => { 
+            this.log(":sunglasses: We've spun up another node.")
+            return;
+        }).catch((err) => { 
+            res.send(err);
+            return;
+        });
     }
 }
 
