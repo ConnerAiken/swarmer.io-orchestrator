@@ -10,18 +10,21 @@ utils.log("Downloading account data from DigitalOcean..");
 promises.push(api.account().then((data) => {
     utils.log(`Received ${Object.keys(data.body).length} fields about the service account.`);
     digitalOcean.account = data.body; 
+    console.log(digitalOcean.account); 
 }));
 
 // 1. Get recent actions
-promises.push(api.accountGetActions({includeAll: true}).then((data) => {
+promises.push(api.accountGetActions({includeAll: true}).then((data) => { 
     utils.log(`Received ${data.body.length} recent events.`);
     digitalOcean.recentActions = data.body; 
+    console.log(digitalOcean.recentActions);
 }));
 
 // 2. get list of all droplets
 promises.push(api.dropletsGetAll({includeAll: true}).then((data) => {
     utils.log(`Received ${data.body.length} droplet data.`);
     digitalOcean.droplets = data.body;
+    console.log(digitalOcean.droplets);
 })); 
  
 Promise.all(promises).then(() => {
