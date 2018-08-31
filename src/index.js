@@ -28,6 +28,14 @@ promises.push(api.dropletsGetAll({includeAll: true}).then((data) => {
     console.log(digitalOcean.droplets);
 })); 
  
+// 3. 
+// ███████╗███████╗██████╗ ██╗   ██╗███████╗    ██╗████████╗    
+// ██╔════╝██╔════╝██╔══██╗██║   ██║╚══███╔╝    ██║╚══██╔══╝    
+// ███████╗█████╗  ██████╔╝██║   ██║  ███╔╝     ██║   ██║       
+// ╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝ ███╔╝      ██║   ██║       
+// ███████║███████╗██║  ██║ ╚████╔╝ ███████╗    ██║   ██║       
+// ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝    ╚═╝   ╚═╝       
+                                                                
 Promise.all(promises).then(() => {
     app.listen(process.env.port, () => utils.log(`Listening on port ${process.env.port}!`));
 }).catch((err) => {
