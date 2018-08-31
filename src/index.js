@@ -5,11 +5,10 @@ utils.bootstrap();
 const promises = [];
 const { digitalOcean, app, api } = utils;  
  
-utils.log(":four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: "); 
+utils.log("~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-="); 
 utils.log(":100: Service has been deployed and started! :100:"); 
-utils.log(":100: Downloading account data from DigitalOcean.. :100: ");
-utils.log(":100: Service has been deployed and started! :100:"); 
-utils.log(":four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: :four_leaf_clover: "); 
+utils.log(":100: Downloading account data from DigitalOcean.. :100: "); 
+utils.log("~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-=~-="); 
 
 let intervalMilis = 0;
 setInterval(() => {
@@ -48,5 +47,5 @@ setInterval(() => {
 // ╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝ ███╔╝      ██║   ██║       
 // ███████║███████╗██║  ██║ ╚████╔╝ ███████╗    ██║   ██║       
 // ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝    ╚═╝   ╚═╝     
-app.listen(process.env.port, () => utils.log(`:cumbical_chick: Listening on port ${process.env.port}!`));
+app.listen(process.env.port, () => utils.log(`:robot_face: Listening on port ${process.env.port}!`));
    
