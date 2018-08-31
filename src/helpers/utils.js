@@ -131,7 +131,7 @@ class Utils {
             region: "sfo2",
             size: "s-1vcpu-1gb",
             image: "34430407",
-            tags: ['swarmerio-node', 'not-ready']
+            tags: ['swarmerio-node', 'free-d-5', 'free-tr-50', 'not-ready']
         };
     
         console.log("Attempting to create droplet with ", agentConfig);
