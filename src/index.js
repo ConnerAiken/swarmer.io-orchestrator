@@ -1,8 +1,9 @@
-import './helpers/bootstrap';
+import utils from './helpers/utils';
+utils.bootstrap();
  
 const promises = [];
-const digitalOcean = global.digitalOcean; 
-
+const { digitalOcean, app, api } = utils;  
+ 
 utils.log("Service has been deployed and started!"); 
 utils.log("Downloading account data from DigitalOcean..");
 

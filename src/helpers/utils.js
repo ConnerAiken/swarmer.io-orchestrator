@@ -1,5 +1,42 @@
-export default {
-    makeID() {
+import dotenv from "dotenv";
+import path from "path"; 
+import DigitalOcean from "do-wrapper";
+import express from "express";
+import bodyParser from "body-parser";
+import SlackWebhook from "slack-webhook";
+
+class Utils {
+    static bootstrap() {   
+            this.loadENV(); 
+            
+            this.api = new DigitalOcean(process.env.doApiKey, process.env.doPageSize);
+            this.digitalOcean = {
+                account: {},
+                recentActions: [],
+                droplets: [],
+                images: []
+            };
+            this.slack = new SlackWebhook(process.env.slackWebhook, {
+                defaults: {
+                username: process.env.appName,
+                channel: '#orchestrator-log',
+                icon_emoji: ':robot_face:'
+                }
+            }); 
+
+            this.app = express();
+            this.app.use(bodyParser.json());
+            this.app.use(bodyParser.urlencoded({
+                extended: true
+            }));
+            this.app.use(this.expressLog);
+            // Routes -- config must be defined prior to importing
+            this.app.use("/agent", require('./../modules/agent'));
+            this.app.use("/agent/:agentID/test", require('./../modules/agent.test')); 
+
+    }
+ 
+    static makeID() {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       
@@ -7,8 +44,8 @@ export default {
           text += possible.charAt(Math.floor(Math.random() * possible.length));
       
         return text;
-    },
-    expressLog(err, req, res, next) { 
+    }
+    static expressLog(err, req, res, next) { 
         if (res.headersSent) {
             return next(err);
         }
@@ -17,9 +54,9 @@ export default {
         
         res.status(500);
         res.render('error', { error: err })  ;
-    },
-    log(msg, type = 0) { 
-        var slack = global.slack ? global.slack : {send: () => false};
+    }
+    static log(msg, type = 0) { 
+        var slack = this.slack ? this.slack : {send: () => false};
  
         if(type === 1) {
             console.warn(`[${process.env.appName}] ${msg}`); 
@@ -37,8 +74,8 @@ export default {
             console.log(`[${process.env.appName}] ${msg}`);
             slack.send(msg);
         }
-    },
-    loadENV() {
+    }
+    static loadENV() {
         const defaultConfig = dotenv.config({
             path: path.resolve(process.cwd(), '.env')
         });
@@ -53,3 +90,5 @@ export default {
         }
     }
 }
+
+export default Utils;
