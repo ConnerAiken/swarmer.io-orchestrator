@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
         private_networking: true,
         backups: false,
         region: "sfo2",
-        size: "s-1vcpu-1gb",
+        size: process.env.baseAgentImage,
         image: "34430407",
         tags: ['agent', req.body.account]
     };
